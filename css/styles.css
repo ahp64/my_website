@@ -381,6 +381,7 @@ main__btn:after p {
 @media screen and (max-width: 800px) {
     #all-content{
         align-items: stretch;
+        height: 100vh;
     }
     
     #map-container {
@@ -392,13 +393,14 @@ main__btn:after p {
         background: rgb(47,56,105);
         background: radial-gradient(circle, rgba(47,56,105,1) 0%, rgba(0,0,0,1) 100%);
         order: 0;
+        position:static;
     }
     #interactive-map { 
         width: 90%;             /* Allow the map to expand as the page grows */      
         min-width: none;        /* Minimum width of the map */
         min-height: none;       /* Minimum height of the map */       /* Maximum width of the map */
         max-height: none;  
-        height:40%;     /* Maximum height of the map */
+        /*height:40%;     /* Maximum height of the map */
         margin: 0 auto;          /* Center horizontally */       
     }
     #blog-writeup {  
@@ -410,3 +412,17 @@ main__btn:after p {
         background: #121518;
     }
 }
+
+.carousel-inner {
+    height: 700px; /* Set your desired fixed height for the carousel */
+    display: flex;
+    /*justify-content: center; /* Horizontally center the image */
+    /*align-items: center; /* Vertically center the image */
+}
+
+
+.carousel-item {
+    margin: auto;
+    justify-content: center;
+    align-items:center;
+  }

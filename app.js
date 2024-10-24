@@ -4,16 +4,16 @@ const menuLinks = document.querySelector('.navbar__menu');
 const imageSets = {
     // Landing page
     set0: [
-        'IMG_7367.png',
-        'IMG_7390.png',
-        'IMG_7481.png',
-        'IMG_7495.png'
+        'IMG_7367.webp',
+        'IMG_7390.webp',
+        'IMG_7481.webp',
+        'IMG_7495.webp'
     ],
     // Amarillo
     set1: [
-        'amar/IMG_2426.png',
-        'amar/IMG_2432.png',
-        'amar/IMG_7436.png'
+        'amar/IMG_2426.webp',
+        'amar/IMG_2432.webp',
+        'amar/IMG_7436.webp'
     ],
     // Gainesville
     set2: [
@@ -21,26 +21,33 @@ const imageSets = {
     ],
     // La Crosse
     set3: [
-        'lax/IMG_1368.png',
-        'lax/IMG_7860.png',
-        'lax/IMG_7868.png'
+        'lax/IMG_1368.webp',
+        'lax/IMG_7860.webp',
+        'lax/IMG_7868.webp'
     ]
     
 };
 const images = [
-    'IMG_7367.png',
-    'IMG_7390.png',
-    'IMG_7481.png',
-    'IMG_7495.png'
+    'IMG_7367.webp',
+    'IMG_7390.webp',
+    'IMG_7481.webp',
+    'IMG_7495.webp'
 ];
+
+$('#myCarousel').on('slide.bs.carousel', function (e) {
+    $('.carousel-item img').each(function () {
+      // Ensure styles are applied before the sliding starts
+      $(this).css({
+        'max-height': '100%',
+        'max-width': '100%',
+        'object-fit': 'contain',
+        'margin': 'auto' // Ensure it's centered in its parent
+      });
+    });
+  });
+
 // Path to the folder containing the images
 const imageFolder = 'images/';  // Adjust this to your folder structure
-
-const Amarillo = [
-    'IMG_2426.png',
-    'IMG_2432.png',
-    'IMG_7436.png'
-];
 
 // Function to select a random image
 function getRandomImage(path, names) {
