@@ -270,7 +270,7 @@ main__btn:after p {
         justify-self: center;
         width: 100%;
         margin: 0 auto;
-        height: 90vh;
+        height: 100vh;
     }
 
     .main__content {
@@ -327,6 +327,11 @@ main__btn:after p {
     flex-direction: row;
 }
 
+#blog-writeup h2 {
+    font-size: 2.5vw;
+    padding: 15px;
+}
+
 #blog-writeup {  
     flex: 1;               /* Take up remaining space */
     text-align: center;        /* Center text */
@@ -381,7 +386,6 @@ main__btn:after p {
 @media screen and (max-width: 800px) {
     #all-content{
         align-items: stretch;
-        height: 100vh;
     }
     
     #map-container {
@@ -408,21 +412,42 @@ main__btn:after p {
         text-align: center;      /* Center text */
         padding: 20px;            /* Optional padding */
         order: 1;
-        height: auto;
+        min-height: 30vh;
         background: #121518;
+    }
+    .carousel-inner {
+        justify-content: none;
+        min-height: 400px !important;
+        height: auto; /* Set your desired fixed height for the carousel */
+    }
+
+    #blog-writeup h2 {
+        font-size: 35px;
+        padding: 15px;
+    }
+    .map-button {
+        r: 9; /* SVG circle radius for smaller screens */
     }
 }
 
 .carousel-inner {
-    height: 700px; /* Set your desired fixed height for the carousel */
+    min-height: 600px; /* Set your desired fixed height for the carousel */
     display: flex;
-    /*justify-content: center; /* Horizontally center the image */
+    align-items:center !important;
+    justify-content: center !important; /* Horizontally center the image */
     /*align-items: center; /* Vertically center the image */
 }
 
+.no-transition .carousel-item {
+    transition: none !important;
+}
 
 .carousel-item {
-    margin: auto;
-    justify-content: center;
-    align-items:center;
-  }
+    transition: none !important;
+}
+
+
+/*.item {
+    position:relative;
+    height:100%
+  }*/
