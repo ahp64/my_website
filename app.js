@@ -12,7 +12,7 @@ const imageSets = {
     // Amarillo
     set1: [
         'amar/IMG_2426.webp',
-        'amar/IMG_2422.mov',
+        'amar/IMG_2422.mp4',
         'amar/IMG_2432.webp',
         'amar/IMG_7436.webp'
     ],
@@ -38,12 +38,12 @@ const imageSets = {
 
     // Keys
     set5: [
-        'keys/698E1DDA-1951-4C6E-9B74-1A6BF76A0F10.mov',
+        'keys/698E1DDA-1951-4C6E-9B74-1A6BF76A0F10.mp4',
         'keys/IMG_0987.webp',
-        'keys/IMG_0761.mov',
+        'keys/IMG_0761.mp4',
         'keys/IMG_0747.webp',
         'keys/IMG_0989.webp',
-        'keys/filtered-62C98421-1252-4C1F-BD8C-4964543F9C92.mov',
+        'keys/filtered-62C98421-1252-4C1F-BD8C-4964543F9C92.mp4',
         'keys/IMG_0751.webp',
         'keys/IMG_0753.webp',
         'keys/IMG_0985.webp',
@@ -51,12 +51,12 @@ const imageSets = {
     ],
 
     set6: [
-        'bre/IMG_2318.mov',
-        'bre/IMG_2319.png',
-        'bre/IMG_2321.png',
-        'bre/IMG_2329.mov',
-        'bre/IMG_2331.mov',
-        'bre/IMG_1844.png',
+        'bre/IMG_2318.mp4',
+        'bre/IMG_2319.webp',
+        'bre/IMG_2321.webp',
+        'bre/IMG_2329.mp4',
+        'bre/IMG_2331.mp4',
+        'bre/IMG_1844.webp',
     ]
     
     
@@ -112,35 +112,88 @@ function loadCarouselImages(images) {
 
         // Create carousel item
         const item = document.createElement('div');
-        // For Bootstrap 3, you might use .item. For Bootstrap 4/5, use .carousel-item instead:
-        item.classList.add('item'); 
+        item.classList.add('item');
         if (index === 0) item.classList.add('active');
 
-        // Decide if it's an image or video
-        if (file.toLowerCase().endsWith('.mov')) {
+        // Add loading placeholder
+        const placeholder = document.createElement('div');
+        placeholder.classList.add('loading-placeholder');
+        placeholder.style.cssText = `
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: #f3f4f6;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            animation: pulse 2s infinite;
+        `;
+        placeholder.textContent = 'Loading...';
+        item.appendChild(placeholder);
+
+        if (file.toLowerCase().endsWith('.mp4')) {
             const video = document.createElement('video');
-            video.src = imageFolder + file;
-            // Remove or omit controls
-            // video.controls = true; // If you had this line, remove it or comment it out
-            // Add classes to size it similarly to images:
-            // (Bootstrap 3 example)
-            video.classList.add('img-responsive', 'center-block');
-            video.autoplay = true;      // Autoplay
-            video.muted = true;         // Often required by browsers for autoplay
-            video.playsinline = true;   // Helps ensure autoplay on iOS
-            video.loop = true;
-            // If using Bootstrap 4/5, you might do:
-            // video.classList.add('d-block', 'w-100');
+            
+
+            // Optimize video loading
+            video.preload = 'metadata';
+            video.setAttribute('fetchpriority', 'high');
+            
+            // Add loading states
+            video.style.opacity = '0';
+            video.style.transition = 'opacity 0.3s';
+            
+            // Set all attributes at once
+            Object.assign(video, {
+                autoplay: true,
+                muted: true,
+                playsinline: true,
+                loop: true,
+                defaultMuted: true,
+                className: 'img-responsive center-block'
+            });
+
+            // Use source tag instead of direct src
+            const source = document.createElement('source');
+            source.src = imageFolder + file;
+            source.type = 'video/mp4';
+            video.appendChild(source);
+
+            // Loading events
+            video.addEventListener('loadstart', () => {
+                placeholder.style.display = 'flex';
+            });
+
+            video.addEventListener('canplay', () => {
+                video.style.opacity = '1';
+                placeholder.style.display = 'none';
+                video.play().catch(err => console.log('Autoplay prevented:', err));
+            });
+
+            video.addEventListener('error', (e) => {
+                console.error('Video loading error:', e);
+                placeholder.textContent = 'Error loading video';
+            });
 
             item.appendChild(video);
         } else {
             const img = document.createElement('img');
-            img.src = imageFolder + file;
-            // (Bootstrap 3 example)
+            img.style.opacity = '0';
+            img.style.transition = 'opacity 0.3s';
             img.classList.add('img-responsive', 'center-block');
-            // If using Bootstrap 4/5, you might do:
-            // img.classList.add('d-block', 'w-100');
+            
+            img.onload = () => {
+                img.style.opacity = '1';
+                placeholder.style.display = 'none';
+            };
 
+            img.onerror = () => {
+                placeholder.textContent = 'Error loading image';
+            };
+
+            img.src = imageFolder + file;
             item.appendChild(img);
         }
 
@@ -148,15 +201,12 @@ function loadCarouselImages(images) {
     });
 
     // Hide controls if there's only one file
-    if (images.length === 1) {
-        document.getElementById('indics').style.display = 'none';
-        document.getElementById('leftc').style.display = 'none';
-        document.getElementById('rightc').style.display = 'none';
-    } else {
-        document.getElementById('indics').style.display = 'block';
-        document.getElementById('leftc').style.display = 'block';
-        document.getElementById('rightc').style.display = 'block';
-    }
+    ['indics', 'leftc', 'rightc'].forEach(id => {
+        const element = document.getElementById(id);
+        if (element) {
+            element.style.display = images.length === 1 ? 'none' : 'block';
+        }
+    });
 
     document.getElementById('myCarousel').style.display = 'block';
 }
@@ -194,7 +244,7 @@ document.getElementById('gainesville').addEventListener('click', function() {
 
 document.getElementById('tucson').addEventListener('click', function() {
     document.getElementById('state-title').innerText = 'Tucson, AZ';
-    document.getElementById('state-description').innerText = 'When I was reading about Tucson before I stopped there, I heard it was both a city and a college town. I got a chance to stress test this by going there when all of the college students were home for winter break. But college towns, in my experience, are set apart as much by the character of the townies as by that of the students, from the unbelievably generous F-250 tailgate commandos to the cult members to the faces you see on campus police sketches produced when a student gets robbed. University of Arizona students call their townies \"t-locs\" and they have the same type of concentrated eccentricity that I have come to expect from places like Gainesville or Eugene. \n \n The real reason I stopped in Tucson was because it was December 31st, and I had seen on Instagram that they drop a giant Taco Bell taco for New Year\'s Eve instead of a ball (big enough to get corporate sponsorships for their eccentricities, I guess). But the image displayed here is actually not mine. I was misled by my Uber driver and ended up at a French revolution-themed event at a hotel 2 blocks away instead, then got too comfy with a group of t-locs I met before I realized my mistake. I\'m not sure if it\'s snobby of me to have passed up something eccentric like that for bottomless champagne and macaroons or down to earth to have skipped it for the company. I just wish I still had the video of the guillotines dropping at midnight.';
+    document.getElementById('state-description').innerText = 'As I read about Tucson on my drive there, I found several sources claiming that it was both a city and a college town. I got a chance to stress test this by going there when all of the college students were home for winter break. But college towns, in my experience, are set apart as much by the character of the townies as by that of the students, from the unbelievably generous F-250 tailgate commandos to the cult members to the faces you see on campus police sketches produced when a student gets robbed. University of Arizona students call their townies \"t-locs\" and they have the same type of concentrated eccentricity that I have come to expect from places like Gainesville or Eugene. \n \n The real reason I stopped in Tucson was because it was December 31st, and I had seen on Instagram that they drop a giant Taco Bell taco for New Year\'s Eve instead of a ball (big enough to get corporate sponsorships for their eccentricities, I guess). But the image displayed here is actually not mine. I was misled by my Uber driver and ended up at a French revolution-themed event at a hotel 2 blocks away instead, then got too comfy with a group of t-locs I met before I realized my mistake. I\'m not sure if it\'s snobby of me to have passed up something eccentric like that for bottomless champagne and macaroons or down to earth to have skipped it for the company. I just wish I still had the video of the guillotines dropping at midnight.';
     loadCarouselImages(imageSets.set4);
 });
 
@@ -215,8 +265,23 @@ document.getElementById('breckenridge').addEventListener('click', function() {
         .catch(error => console.error('Error loading text:', error));
 });
 
+if (window.innerWidth <= 800) {
+    document.querySelectorAll('circle.map-button')
+      .forEach(c => c.setAttribute('r', '14'));
+}
+
 window.addEventListener('load', function() {
     document.querySelector('.main__content').style.opacity = '1'; // Fade in on load
+});
+
+window.addEventListener('DOMContentLoaded', function () {
+    // Check if we're on a small screen
+    if (window.innerWidth <= 800) {
+      const circles = document.querySelectorAll('circle.map-button');
+      circles.forEach(circle => {
+        circle.setAttribute('r', '9'); // Increase as needed
+      });
+    }
 });
 
 // Add more event listeners for other places you've visited

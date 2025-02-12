@@ -446,6 +446,17 @@ main__btn:after p {
     transition: none !important;
 }
 
+@keyframes pulse {
+    0% { opacity: 1; }
+    50% { opacity: 0.5; }
+    100% { opacity: 1; }
+}
+
+.loading-placeholder {
+    background: #f3f4f6;
+    animation: pulse 2s infinite;
+}
+
 
 /*.item {
     position:relative;
