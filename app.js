@@ -260,9 +260,14 @@ document.getElementById('amarillo').addEventListener('click', function() {
 });
 
 document.getElementById('gainesville').addEventListener('click', function() {
-    document.getElementById('state-title').innerText = 'Gainesville, FL';
-    document.getElementById('state-description').innerText = 'I\'m glad the University of Florida is here and not somewhere that makes more sense. ';
-    loadCarouselImages(imageSets.set2);
+    fetch('posts/gainesville.json')
+        .then(response => response.json())
+        .then(data => {
+            document.getElementById('state-title').innerText = data.title;
+            document.getElementById('state-description').innerHTML = data.description;
+            loadCarouselImages(imageSets.set2);
+        })
+        .catch(error => console.error('Error loading text:', error));
 });
 
 document.getElementById('tucson').addEventListener('click', function() {
@@ -315,7 +320,7 @@ if (window.innerWidth <= 800) {
       .forEach(c => c.setAttribute('r', '14'));
 }
 
-window.addEventListener('DOMContentLoaded', function() {
+window.addEventListener('load', function() {
     document.querySelector('.main__content').style.opacity = '1'; // Fade in on load
 });
 
@@ -324,9 +329,4 @@ window.addEventListener('DOMContentLoaded', function () {
     if (window.innerWidth <= 800) {
       const circles = document.querySelectorAll('circle.map-button');
       circles.forEach(circle => {
-        circle.setAttribute('r', '9'); // Increase as needed
-      });
-    }
-});
-
-// Add more event listeners for other places you've visited
+        circ
