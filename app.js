@@ -18,7 +18,11 @@ const imageSets = {
     ],
     // Gainesville
     set2: [
-        'gnv/floridagators.jpeg'
+        'gnv/IMG_5045.mp4',
+        'gnv/IMG_3065.webp',
+        'gnv/IMG_2558.webp',
+        'gnv/IMG_3485.webp',
+        'gnv/P1020434.webp',
     ],
     // La Crosse
     set3: [
@@ -50,6 +54,7 @@ const imageSets = {
         'keys/IMG_0986.webp',
     ],
 
+    // Breckenridge
     set6: [
         'bre/IMG_2318.mp4',
         'bre/IMG_2319.webp',
@@ -57,6 +62,20 @@ const imageSets = {
         'bre/IMG_2329.mp4',
         'bre/IMG_2331.mp4',
         'bre/IMG_1844.webp',
+    ],
+
+    // Seattle
+    set7: [
+        'sea/IMG_5272.png',
+    ],
+
+    // Palestine
+    set8: [
+        'pal/IMG_2461.webp',
+        'pal/5A217F69-F5A7-4C89-B882-68A45BD5C78A.mp4',
+        'pal/FtV93Q8FTu.jpg',
+        'pal/934D0D6A-577B-4B74-8AD5-CA78FE156B09.mp4',
+        'pal/IMG_2459.webp',
     ]
     
     
@@ -136,6 +155,7 @@ function loadCarouselImages(images) {
         if (file.toLowerCase().endsWith('.mp4')) {
             const video = document.createElement('video');
             
+            
 
             // Optimize video loading
             video.preload = 'metadata';
@@ -152,8 +172,11 @@ function loadCarouselImages(images) {
                 playsinline: true,
                 loop: true,
                 defaultMuted: true,
+                preload: 'metadata',
                 className: 'img-responsive center-block'
             });
+            video.setAttribute('webkit-playsinline', '');
+            video.setAttribute('playsinline', '');
 
             // Use source tag instead of direct src
             const source = document.createElement('source');
@@ -261,6 +284,28 @@ document.getElementById('breckenridge').addEventListener('click', function() {
             document.getElementById('state-title').innerText = data.title;
             document.getElementById('state-description').innerHTML = data.description;
             loadCarouselImages(imageSets.set6);
+        })
+        .catch(error => console.error('Error loading text:', error));
+});
+
+document.getElementById('seattle').addEventListener('click', function() {
+    fetch('posts/seattle.json')
+        .then(response => response.json())
+        .then(data => {
+            document.getElementById('state-title').innerText = data.title;
+            document.getElementById('state-description').innerHTML = data.description;
+            loadCarouselImages(imageSets.set7);
+        })
+        .catch(error => console.error('Error loading text:', error));
+});
+
+document.getElementById('palestine').addEventListener('click', function() {
+    fetch('posts/palestine.json')
+        .then(response => response.json())
+        .then(data => {
+            document.getElementById('state-title').innerText = data.title;
+            document.getElementById('state-description').innerHTML = data.description;
+            loadCarouselImages(imageSets.set8);
         })
         .catch(error => console.error('Error loading text:', error));
 });
