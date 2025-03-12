@@ -329,4 +329,9 @@ window.addEventListener('DOMContentLoaded', function () {
     if (window.innerWidth <= 800) {
       const circles = document.querySelectorAll('circle.map-button');
       circles.forEach(circle => {
-        circ
+        circle.setAttribute('r', '9'); // Increase as needed
+      });
+    }
+});
+
+// Add more event listeners for other places you've visited
