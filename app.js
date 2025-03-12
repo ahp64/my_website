@@ -334,4 +334,4 @@ window.addEventListener('DOMContentLoaded', function () {
     }
 });
 
-// Add more event listeners for other places you've visited
+// Add more event listeners for other places visited
