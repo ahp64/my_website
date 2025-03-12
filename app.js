@@ -315,7 +315,7 @@ if (window.innerWidth <= 800) {
       .forEach(c => c.setAttribute('r', '14'));
 }
 
-window.addEventListener('load', function() {
+window.addEventListener('DOMContentLoaded', function() {
     document.querySelector('.main__content').style.opacity = '1'; // Fade in on load
 });
 
