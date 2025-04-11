@@ -76,6 +76,12 @@ const imageSets = {
         'pal/FtV93Q8FTu.jpg',
         'pal/934D0D6A-577B-4B74-8AD5-CA78FE156B09.mp4',
         'pal/IMG_2459.webp',
+    ],
+
+    set9: [
+        'blu/IMG_7875.webp',
+        'blu/IMG_1373.webp',
+        'blu/Iowastan.jpg',
     ]
     
     
@@ -311,6 +317,17 @@ document.getElementById('palestine').addEventListener('click', function() {
             document.getElementById('state-title').innerText = data.title;
             document.getElementById('state-description').innerHTML = data.description;
             loadCarouselImages(imageSets.set8);
+        })
+        .catch(error => console.error('Error loading text:', error));
+});
+
+document.getElementById('blueearth').addEventListener('click', function() {
+    fetch('posts/blueearth.json')
+        .then(response => response.json())
+        .then(data => {
+            document.getElementById('state-title').innerText = data.title;
+            document.getElementById('state-description').innerHTML = data.description;
+            loadCarouselImages(imageSets.set9);
         })
         .catch(error => console.error('Error loading text:', error));
 });
