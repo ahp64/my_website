@@ -81,7 +81,7 @@ const imageSets = {
     set9: [
         'blu/IMG_7875.webp',
         'blu/IMG_1373.webp',
-        'blu/Iowastan.jpg',
+        // 'blu/Iowastan.jpg',
     ]
     
     
@@ -258,11 +258,16 @@ document.getElementById('la-crosse').addEventListener('click', function() {
     loadCarouselImages(imageSets.set3);
 });
 
+
 document.getElementById('amarillo').addEventListener('click', function() {
-    document.getElementById('state-title').innerText = 'Amarillo, TX';
-    document.getElementById('state-description').innerText = 'This is the Texas that Hollywood sold me on. Not no damn metroplex. The belt buckles are the size of dog bowls and the asphalt sticks to your shoes under the sun at the rest stops. I remember my second time coming to Amarillo, I was driving around on a Saturday night, curious what the locals did for fun. I drove up the \"main street\" and saw a few gawkers watching a Charger do a burnout, but that was the extent of the action on what appeared to be the only real \"strip\" in town. Finally, I pulled into a local drive-in style restaurant near the edge of town and rolled down the window to order a corn dog when I heard music behind me. Looking through my rearview, I saw 2 men and 3 women, looking like they were dressed to go out, hopping out of a truck and walking toward the building it was coming from. Further investigation revealed that there was a line outside (the first traffic I had seen since Salt Lake City). There was a dedicated parking lot that looked to be about an acre large and almost at capacity, full of trucks whose owners had driven there and were presumably driving back. In the middle sat a detached, windowless concrete building. It didn\'t even show up on Google Maps. If you want to turn up in the panhandle, look for a monolith.';
-    // document.getElementById('blog-writeup').src = getRandomImage(imageFolder + 'Amarillo/', Amarillo);
-    loadCarouselImages(imageSets.set1);
+    fetch('posts/amarillo.json')
+        .then(response => response.json())
+        .then(data => {
+            document.getElementById('state-title').innerText = data.title;
+            document.getElementById('state-description').innerHTML = data.description;
+            loadCarouselImages(imageSets.set1);
+        })
+        .catch(error => console.error('Error loading text:', error));
 });
 
 document.getElementById('gainesville').addEventListener('click', function() {
