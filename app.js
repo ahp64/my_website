@@ -44,6 +44,7 @@ const imageSets = {
     set5: [
         'keys/698E1DDA-1951-4C6E-9B74-1A6BF76A0F10.mp4',
         'keys/IMG_0987.webp',
+        'keys/flawdakeys.webp',
         'keys/IMG_0761.mp4',
         'keys/IMG_0747.webp',
         'keys/IMG_0989.webp',
@@ -287,10 +288,21 @@ document.getElementById('tucson').addEventListener('click', function() {
     loadCarouselImages(imageSets.set4);
 });
 
-document.getElementById('keys').addEventListener('click', function() {
+/*document.getElementById('keys').addEventListener('click', function() {
     document.getElementById('state-title').innerText = 'The Florida Keys';
     document.getElementById('state-description').innerText = 'The initial drive out to Bahia Honda Key, where my friend Canek and I camped, was easily the nicest drive I\’ve done on in the state of Florida. The scenery slowly transitions from the towns, like Homestead and Florida City, that are still (somehow) technically in Miami-Dade County to endless swampland that grows more and more sparse, until finally you\’re out over the turquoise blue water of the Strait of Florida. We found one of my dad\’s old reggae CDs in the trunk and popped it in. \n \n The sun was setting for what felt like an hour, and as it grew darker, the light from the Miami metro area faded away and more stars came out than I’ve ever seen on the mainland. The experience has an unsettling scale to it. Most of the islands along the drive are so small and flat that you can see their entire geography stretch out in front of you, as if on a map. But the other little islands, dotted out in a line like a breadcrumb trail, continue all the way to the horizon. It goes on forever—the drive from Miami to Key West takes about as long as the drive from Miami to Orlando—and so you become very acutely aware of both the size of your field of view and how tiny that is compared to the distance you’re going. Then you remember you have Washington plates on your car and get a weird pit in your stomach. We checked in at Bahia Honda State Park, set up camp, and continued on for another hour until we made it into town. \n \n “Where The Freaks At?” Key West stands as nature\’s elegant response to one of mankind\’s timeless questions. There is a huge colony of mutant six-toed cats established by Earnest Hemingway that roams the island to this day. Duvall Street reminded me of Bourbon Street except with more families and somehow more leather too. Definitely an interesting spring break destination. That is all I can reasonably say about it on this website. \n \n I woke up early the next day to catch the sunrise, fell asleep in the sun for the next 5 hours, and caught the worst sunburn of my life. Then, half awake, I dropped the disposable camera in the seawater and messed up the film. And Canek hates camping, so he was complaining the whole time. But the manatees made up for it regardless, and the Keys will always have a place in my heart as a slice of the tropics reachable on a tank of gas.';
     loadCarouselImages(imageSets.set5);
+});*/
+
+document.getElementById('keys').addEventListener('click', function() {
+    fetch('posts/keys.json')
+        .then(response => response.json())
+        .then(data => {
+            document.getElementById('state-title').innerText = data.title;
+            document.getElementById('state-description').innerHTML = data.description;
+            loadCarouselImages(imageSets.set5);
+        })
+        .catch(error => console.error('Error loading text:', error));
 });
 
 document.getElementById('breckenridge').addEventListener('click', function() {
